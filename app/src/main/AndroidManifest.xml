@@ -22,7 +22,10 @@
         <activity android:name=".view.me.AboutActivity" />
         <activity android:name=".view.me.FeedbackActivity" />
         <activity android:name=".view.notice.ChatsActivity" />
-        <activity android:name=".view.login.RegisterActivity"></activity>
+        <activity android:name=".view.login.RegisterActivity" />
+        <activity
+            android:name=".view.main.HomeActivity"
+            android:label="@string/title_activity_home"></activity>
     </application>
 
 </manifest>
