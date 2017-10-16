@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Novel</string>
+
+    <string name="sp_login">登录</string>
+    <string name="sp_register">注册</string>
+
+    <string name="gu_log">Novel</string>
+
+    <string name="lg_email">邮箱:</string>
+    <string name="lg_password">密码:</string>
+    <string name="lg_sign">登录</string>
+
+    <string name="rg_vcode">验证码:</string>
+
+    <string name="rg_getcode">获取验证码</string>
+
+    <string name="rg_ok">确定</string>
+</resources>
