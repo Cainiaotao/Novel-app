@@ -15,10 +15,13 @@
     <string name="rg_getcode">获取验证码</string>
 
     <string name="rg_ok">确定</string>
-    <string name="title_activity_main2">Main2Activity</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+
+
+    <string name="title_home">首页</string>
+    <string name="title_find">发现</string>
+    <string name="title_Contacts">通信录</string>
+    <string name="title_me">我的</string>
+
     <string name="title_activity_home">HomeActivity</string>
 
     <!-- TODO: Remove or change this placeholder text -->

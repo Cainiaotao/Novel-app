@@ -1,6 +1,5 @@
 package com.tantao.novel.view.me;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.tantao.novel.base.BaseActivity;
