@@ -5,6 +5,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TabHost;
+import android.widget.Toast;
 
 import com.tantao.novel.R;
 
@@ -17,6 +19,9 @@ import com.tantao.novel.R;
  * create an instance of this fragment.
  */
 public class HomeFragment extends Fragment {
+
+
+    private TabHost tabHost;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -62,9 +67,36 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        View view=inflater.inflate(R.layout.fragment_home, container, false);
+        initTabHost(view);
+
+        return view;
     }
 
+    private void initTabHost(View view){
+        tabHost = (TabHost) view.findViewById(R.id.home_tabHost);
+        tabHost.setup();
+        tabHost.addTab(tabHost.newTabSpec("news").setIndicator("新闻").setContent(R.id.tab_news));
+        tabHost.addTab(tabHost.newTabSpec("novel").setIndicator("小说").setContent(R.id.tab_novel));
+        tabHost.addTab(tabHost.newTabSpec("comics").setIndicator("漫画").setContent(R.id.tab_comics));
+
+        tabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
+            @Override
+            public void onTabChanged(String tabId) {
+                if (tabId.equals("news")) {   //第一个标签
+                    Toast.makeText(getActivity(), "新闻", Toast.LENGTH_SHORT).show();
+                }
+                if (tabId.equals("novel")) {   //第二个标签
+                    Toast.makeText(getActivity(), "小说", Toast.LENGTH_SHORT).show();
+                }
+                if (tabId.equals("comics")) {   //第三个标签
+                    Toast.makeText(getActivity(), "漫画", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
+
+    }
 
 
 

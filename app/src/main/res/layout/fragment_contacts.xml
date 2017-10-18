@@ -5,9 +5,9 @@
     tools:context="com.tantao.novel.view.main.ContactsFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="contacts" />
 
+    <ListView
+        android:id="@+id/ct_listView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </FrameLayout>
