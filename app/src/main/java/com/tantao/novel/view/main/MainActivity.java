@@ -24,6 +24,7 @@ public class MainActivity extends BaseActivity{
     private FrameLayout fy;
     private int lastShowFragment = 0;
 
+
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
@@ -64,6 +65,7 @@ public class MainActivity extends BaseActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        getSupportActionBar().hide();
         initBottomNavigationView();
         initFragments();
     }
