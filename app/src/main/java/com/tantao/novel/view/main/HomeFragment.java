@@ -1,5 +1,7 @@
 package com.tantao.novel.view.main;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -12,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.HttpAuthHandler;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceError;
@@ -28,6 +31,8 @@ import android.widget.Toast;
 
 import com.tantao.novel.R;
 import com.tantao.novel.base.BaseWebView;
+import com.tantao.novel.view.more.MoreActivity;
+import com.tantao.novel.view.search.SearcActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -37,7 +42,7 @@ import com.tantao.novel.base.BaseWebView;
  * Use the {@link HomeFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements View.OnClickListener {
 
 
     private Button SearchBtn,MoreBtn;
@@ -114,6 +119,7 @@ public class HomeFragment extends Fragment {
         View view=inflater.inflate(R.layout.fragment_home, container, false);
         initTabHost(view);
         initWebView(view);
+        initNovelView(view);
         initComicsWebView(view);
 
         return view;
@@ -122,6 +128,8 @@ public class HomeFragment extends Fragment {
     private void initTabHost(View view){
         SearchBtn = (Button)view.findViewById(R.id.home_search_button);
         MoreBtn = (Button)view.findViewById(R.id.home_more_button);
+        SearchBtn.setOnClickListener(this);
+        MoreBtn.setOnClickListener(this);
 
         tabHost = (TabHost) view.findViewById(R.id.home_tabHost);
         tabHost.setup();
@@ -181,12 +189,52 @@ public class HomeFragment extends Fragment {
 
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
-              if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+                    if (request.getUrl().toString() == null)return false;
+                    try {
+                        if(request.getUrl().toString().startsWith("weixin://") //微信
+                                || request.getUrl().toString().startsWith("alipays://") //支付宝
+                                || request.getUrl().toString().startsWith("mailto://") //邮件
+                                || request.getUrl().toString().startsWith("tel://")//电话
+                                || request.getUrl().toString().startsWith("dianping://")//大众点评
+                                || request.getUrl().toString().startsWith("intent://")
+                            //其他自定义的scheme
+                                ) {
+                            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(request.toString()));
+                            startActivity(intent);
+                            return true;
+                        }
+                    } catch (Exception e) { //防止crash (如果手机上没有安装处理某个scheme开头的url的APP, 会导致crash)
+                        return true;//没有安装该app时，返回true，表示拦截自定义链接，但不跳转，避免弹出上面的错误页面
+                    }
+
                   view.loadUrl(request.getUrl().toString());
-              }else {
-                  view.loadUrl(request.toString());
-              }
+                }else {
+                    if(request.toString() == null) return false;
+                    try {
+                        if(request.toString().startsWith("weixin://") //微信
+                                || request.toString().startsWith("alipays://") //支付宝
+                                || request.toString().startsWith("mailto://") //邮件
+                                || request.toString().startsWith("tel://")//电话
+                                || request.toString().startsWith("dianping://")//大众点评
+                                || request.toString().startsWith("intent://")//新浪
+                                //其他自定义的scheme
+                                ) {
+                            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(request.toString()));
+                            startActivity(intent);
+                            return true;
+                        }
+                    } catch (Exception e) { //防止crash (如果手机上没有安装处理某个scheme开头的url的APP, 会导致crash)
+                        return true;//没有安装该app时，返回true，表示拦截自定义链接，但不跳转，避免弹出上面的错误页面
+                    }
+                    view.loadUrl(request.toString());
+                }
                 return super.shouldOverrideUrlLoading(view, request);
+            }
+
+            @Override
+            public void onReceivedHttpAuthRequest(WebView view, HttpAuthHandler handler, String host, String realm) {
+                netWorklayout.setVisibility(View.VISIBLE);
             }
 
             @Override
@@ -228,9 +276,9 @@ public class HomeFragment extends Fragment {
     private void initComicsWebView(View view){
         netWork1layout = (RelativeLayout) view.findViewById(R.id.no_network2);
         webViewComics = (WebView) view.findViewById(R.id.comics_webView);
+        webViewComics.loadUrl(comicsUrl);
         webComicsSettings = webViewComics.getSettings();
         webComicsSettings.setJavaScriptEnabled(true);
-        //webComicsSettings.setJavaScriptCanOpenWindowsAutomatically(true);
         webComicsSettings.setUseWideViewPort(true);
         webComicsSettings.setLoadWithOverviewMode(true);
         webViewComics.setWebViewClient(new WebViewClient(){
@@ -249,15 +297,24 @@ public class HomeFragment extends Fragment {
                 netWork1layout.setVisibility(View.VISIBLE);
             }
         });
-
-        webViewComics.loadUrl(comicsUrl);
-
-
-
     }
 
 
+    private void initNovelView(View view){
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.home_search_button:
+                startActivity(new Intent(getActivity(), SearcActivity.class));
+                break;
+            case R.id.home_more_button:
+                startActivity(new Intent(getActivity(), MoreActivity.class));
+                break;
+        }
+    }
 
     @Override
     public void onDetach() {
