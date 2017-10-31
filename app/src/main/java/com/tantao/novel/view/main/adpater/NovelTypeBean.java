@@ -1,7 +1,7 @@
 package com.tantao.novel.view.main.adpater;
 
 /**
- * Created by tantao on 2017/10/31.
+ * Created by tantao on 2017/10/31.///
  */
 
 public class NovelTypeBean {

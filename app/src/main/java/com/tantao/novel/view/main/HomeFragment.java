@@ -133,7 +133,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         initWebView(view);
         initNovelView(view);
         initComicsWebView(view);
-        return view;
+        return view;//
     }
 
     private void initNovelView(View view) {
