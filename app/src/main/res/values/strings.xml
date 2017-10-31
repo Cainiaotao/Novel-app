@@ -32,4 +32,13 @@
     <string name="no_network">网络故障！</string>
     <string name="home_novel_search">百度搜索</string>
     <string name="home_novel_follow">关注</string>
+
+
+    <!-- TODO: Me Page text -->
+    <string name="me_name">加载中...</string>
+    <string name="me_userdsep">这家伙很懒什么都没有留下...</string>
+    <string name="me_vip">会员</string>
+    <string name="me_shop">商城</string>
+    <string name="me_walkt">钱包</string>
+    <string name="me_list_name">加载中</string>
 </resources>

@@ -6,8 +6,14 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
 import com.tantao.novel.R;
+import com.tantao.novel.base.MeBean;
+import com.tantao.novel.view.main.adpater.MeListViewAdpater;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -18,14 +24,16 @@ import com.tantao.novel.R;
  * create an instance of this fragment.
  */
 public class MeFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private ListView melist;
+    private MeListViewAdpater meListViewAdpater;
+    private List<MeBean> mData;
 
 
 
@@ -33,15 +41,6 @@ public class MeFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment MeFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static MeFragment newInstance(String param1, String param2) {
         MeFragment fragment = new MeFragment();
         Bundle args = new Bundle();
@@ -64,9 +63,26 @@ public class MeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_me, container, false);
+        View view=inflater.inflate(R.layout.fragment_me, container, false);
+        initView(view);
+
+
+        return view;
     }
 
+    private void initView(View view) {
+        melist = (ListView) view.findViewById(R.id.me_list);
+        mData = new ArrayList<>();
+        mData.add(new MeBean("0"));
+        mData.add(new MeBean("1"));
+        mData.add(new MeBean("2"));
+        mData.add(new MeBean("3"));
+        mData.add(new MeBean("4"));
+        mData.add(new MeBean("5"));
+        mData.add(new MeBean("6"));
+        meListViewAdpater = new MeListViewAdpater(getContext(),mData);
+        melist.setAdapter(meListViewAdpater);
+    }
 
 
     @Override
