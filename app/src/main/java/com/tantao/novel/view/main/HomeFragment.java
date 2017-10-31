@@ -8,6 +8,8 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -31,8 +33,13 @@ import android.widget.Toast;
 
 import com.tantao.novel.R;
 import com.tantao.novel.base.BaseWebView;
+import com.tantao.novel.view.main.adpater.NovelAdpater;
+import com.tantao.novel.view.main.adpater.NovelTypeBean;
 import com.tantao.novel.view.more.MoreActivity;
 import com.tantao.novel.view.search.SearcActivity;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -54,6 +61,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private SwipeRefreshLayout newSwipeRefreshLayout;
     private final String newsUrl="https://sina.cn/?wm=4007";
     private final String comicsUrl="http://m.ac.qq.com/";
+
+
+    private RecyclerView mRecyclerView;
+    private NovelAdpater novelAdpater;
+    private List<NovelTypeBean> mData;
 
     private Handler handler= new Handler(){
         @Override
@@ -121,8 +133,21 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         initWebView(view);
         initNovelView(view);
         initComicsWebView(view);
-
         return view;
+    }
+
+    private void initNovelView(View view) {
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.novel_recycler);
+        mData = new ArrayList<>();
+        mData.add(new NovelTypeBean("1","1"));
+        mData.add(new NovelTypeBean("2","2"));
+        mData.add(new NovelTypeBean("3","3"));
+        mData.add(new NovelTypeBean("4","4"));
+        mData.add(new NovelTypeBean("5","5"));
+        novelAdpater = new NovelAdpater(getContext(),mData);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        mRecyclerView.setLayoutManager(linearLayoutManager);
+        mRecyclerView.setAdapter(novelAdpater);
     }
 
     private void initTabHost(View view){
@@ -299,10 +324,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         });
     }
 
-
-    private void initNovelView(View view){
-
-    }
 
     @Override
     public void onClick(View v) {

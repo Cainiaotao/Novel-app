@@ -5,7 +5,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -29,12 +28,29 @@ public class NovelAdpater extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     private final int TYPE_THREE = 2;
     private final int TYPE_FOUR = 3;
     private int currentType;
+    private List<NovelTypeBean> mData;
     private Context context;
 
 
-    public NovelAdpater(Context context) {
+    public NovelAdpater(Context context,List<NovelTypeBean> mData) {
         this.context = context;
+        this.mData = mData;
     }
+
+    /** 根据条件返回条目的类型**/
+    @Override
+    public int getItemViewType(int position) {
+      if (position == 0){
+          return TYPE_ONE;
+      }else if (position == 1){
+          return TYPE_TWO;
+      }else if (position == 2){
+          return TYPE_THREE;
+      }else{
+          return TYPE_FOUR;
+      }
+    }
+
 
     /** 加载显示不同的item **/
     @Override
@@ -72,10 +88,6 @@ public class NovelAdpater extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
 
 
-    @Override
-    public int getItemViewType(int position) {
-        return super.getItemViewType(position);
-    }
 
     @Override
     public long getItemId(int position) {
@@ -84,6 +96,7 @@ public class NovelAdpater extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     @Override
     public int getItemCount() {
+        if (mData!= null)return mData.size()+3;
         return 0;
     }
 

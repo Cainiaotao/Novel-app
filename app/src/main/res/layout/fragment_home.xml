@@ -109,12 +109,8 @@
                             android:layout_centerVertical="true"
                             android:text="@string/no_network"
                             android:textSize="24sp" />
-
-
-                       <include layout="@layout/fragment_home_novel_detail"/>
-
                     </RelativeLayout>
-
+                    <include layout="@layout/fragment_home_novel_detail"/>
 
                 </RelativeLayout>
 
